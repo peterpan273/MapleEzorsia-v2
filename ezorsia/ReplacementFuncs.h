@@ -11,6 +11,12 @@
 //and using it, all together, in a way that doesnt break anything
 //it would be the best way to do it for very extensive client edits and if you need to replace entire functions in that context but
 //code caving is generally easier for short term, one-time patchwork fixes	//thanks you teto for helping me on this learning journey
+
+void __fastcall _sub_50463C_rewrite(void* pThis, void* edx, void* pt) {
+	Log("TryPickDrop triggered");
+	_sub_50463C(pThis, edx, pt); // Call the original function
+}
+
 bool HookGetModuleFileName_initialized = true;
 bool Hook_GetModuleFileNameW(bool bEnable) {
 	static decltype(&GetModuleFileNameW) _GetModuleFileNameW = &GetModuleFileNameW;
@@ -877,6 +883,19 @@ static _sub_44E88E_t _sub_44E88E_rewrite = [](HINSTANCE__* hModule, const char* 
 	//}
 	//return result;
 };
+
+bool Hook_sub_50463C(bool bEnable)
+{
+	BYTE firstval = 0xB8;  //this part is necessary for hooking a client that is themida packed
+	DWORD dwRetAddr = 0x0050463C;	//will crash if you hook to early, so you gotta check the byte to see
+	while (1) {						//if it matches that of an unpacked client
+		if (ReadValue<BYTE>(dwRetAddr) != firstval) { Sleep(1); } //figured this out myself =)
+		else { break; }
+	}
+	
+	return Memory::SetHook(bEnable, reinterpret_cast<void**>(&_sub_50463C), _sub_50463C_rewrite);
+}
+
 bool Hook_sub_44E88E(bool bEnable)
 {
 	BYTE firstval = 0x55;  //this part is necessary for hooking a client that is themida packed
@@ -2499,3 +2518,21 @@ bool Hook_sub_425ADD(bool bEnable)	//1
 	return Memory::SetHook(bEnable, reinterpret_cast<void**>(&_sub_425ADD), _sub_425ADD_Hook);	//2
 }
 //#pragma optimize("", on)
+
+// Function for Gender lock
+static int _sub_460ADC_rewrite(int ItemID)
+{
+	return 2;
+}
+
+bool Hook_sub_460ADC(bool bEnable)
+{
+	BYTE firstval = 0x8B;
+	DWORD dwRetAddr = 0x00460ADC;
+	while (1) {						//if it matches that of an unpacked client
+		if (ReadValue<BYTE>(dwRetAddr) != firstval) { Sleep(1); } //figured this out myself =)
+		else { break; }
+	}//void __thiscall Ztl_bstr_t::Ztl_bstr_t(Ztl_bstr_t *this, const char *s)
+	return Memory::SetHook(bEnable, reinterpret_cast<void**>(&_sub_460ADC), _sub_460ADC_rewrite);	//2
+}
+

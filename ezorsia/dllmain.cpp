@@ -2,16 +2,24 @@
 #include "stdafx.h"
 #include "ReplacementFuncs.h"
 #include "dinput8.h"
+#include "Memory.h"
+#include "logger.h"
+
 
 //NOTE: ideally order hooks by execution order in exe to best bypass themida but im lazy...
 
+// signed int __thiscall CDraggableItem::ThrowItem(_DWORD *this, int pUIEquip, int pUIItem)
+// Address: 004F3887
+// __thiscall CDropPool::TryPickUpDrop(CDropPool *this, const struct tagPOINT *a2)
+	
 //executed after the client is unpacked
 void MainFunc() {
-	//NOTE: rewritten functions will kill all direct memory edits and code caves within their memory range
+	Hook_sub_50463C(true); // Hooks item pickup, for debugging and testing. My First Hook function
+	//Hook_sub_460ADC(true); // Hook for Gender Lock
 
+	//NOTE: rewritten functions will kill all direct memory edits and code caves within their memory range
 	//Hook_sub_9F9808(true);//not rewritten//sub_9F9808 end 009F9892
 	//Hook_sub_4959B8(true);//not rewritten//sub_4959B8 end 00495A86
-
 	//all virtualized sections(v83, ordered top to bottom based on address):
 	//Hook_sub_44E546(false);//unlikely conflict, section virtualized by default //sub_44E546	end 0044E5D4 //unsigned int __cdecl CheckSumForce(char *pbStart, unsigned int dwSize)
 	//Hook_sub_44E5D5(false);//unlikely conflict, section virtualized by default //sub_44E5D5	end	0044E6C2 //unsigned int __cdecl GetGPNMemCrc32(unsigned int dwImgBase, unsigned int dwGPNStart, unsigned int dwGPNSize)
@@ -71,6 +79,8 @@ void MainFunc() {
 
 	std::cout << "Applying resolution " << Client::m_nGameWidth << "x" << Client::m_nGameHeight << std::endl;
 	Client::UpdateResolution();
+
+
 
 	dinput8::CreateHook();	std::cout << "dinput8 hook initialized" << std::endl;
 }

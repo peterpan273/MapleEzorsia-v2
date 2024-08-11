@@ -84,7 +84,34 @@ void Client::UpdateGameStartup() {
 	//008D405E //008D40D4 //sub_8D3B2F
 	//008D4B93 //008D4BBC //CUIStatusBar::SetChatType
 	//00960581 //00960839 //00960C67 //00960DED //CUserLocal::DrawCombo
-}
+
+	// Droppable Nx
+	Memory::FillBytes(0x004F350C, 0x90, 6); // Droppable Nx
+	Memory::FillBytes(0x004F351E, 0x90, 6);
+
+	// Eqp Cap
+	Memory::WriteByte(0x005C94FE, 0x05); 
+
+	// Unlimited Flash Jump
+	Memory::FillBytes(0x0095071D, 0x90, 2);
+	Memory::FillBytes(0x0096BEBC, 0x90, 2);
+	Memory::FillBytes(0x0096BEC7, 0x90, 2);
+	Memory::FillBytes(0x0096BED2, 0x90, 2);
+	Memory::FillBytes(0x0096BF1B, 0x90, 2);
+	Memory::FillBytes(0x0096BF59, 0x90, 6);
+	Memory::FillBytes(0x0096BF26, 0x90, 6);
+	Memory::FillBytes(0x0096BF77, 0x90, 6);
+	Memory::FillBytes(0x0096BF68, 0x90, 6);
+	Memory::FillBytes(0x0096BF91, 0x90, 6);
+	Memory::FillBytes(0x0096BFAE, 0x90, 6);
+	
+	
+	
+	
+	
+
+
+}	
 
 void Client::UpdateResolution() {
 	nStatusBarY = Client::m_nGameHeight - 578;

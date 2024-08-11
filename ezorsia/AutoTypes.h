@@ -970,6 +970,9 @@ static auto _sub_9F51F6 = reinterpret_cast<_sub_9F51F6_t>(0x009F51F6);//void __t
 typedef unsigned int(__fastcall* _sub_9F4E54_t)(unsigned int* pmem, void* edx, unsigned int size, unsigned int* pcheck, unsigned int* pCrc32);
 static auto _sub_9F4E54 = reinterpret_cast<_sub_9F4E54_t>(0x009F4E54);//unsigned int __cdecl Crc32_GetCrc32_VMTable(unsigned int pmem, unsigned int size, unsigned intpcheck, unsigned int *pCrc32) 
 
+typedef void(__fastcall* _sub_50463C_t)(void* pThis, void* edx, void* pt);
+_sub_50463C_t _sub_50463C = reinterpret_cast<_sub_50463C_t>(0x0050463C);
+
 //auto _sub_9F9621 = (void(__cdecl*)(char*))0x009F9621;//XXXXXXXXXXXXX
 //auto _unk_BF0B00 = (ZAllocEx<ZAllocAnonSelector>*)0x00BF0B00;//XXXXXXXXXXXXX00B3F3E8
 
@@ -1891,3 +1894,6 @@ static auto _sub_9F4E54 = reinterpret_cast<_sub_9F4E54_t>(0x009F4E54);//unsigned
 	//	return 1;
 
 //auto physicalSpaceInstance = *reinterpret_cast<CWvsPhysicalSpace2D**>(0xBAADF00D); get instance example courtesy of yeehaw
+
+typedef int(__cdecl* _sub_460ADC_t)(int nItemID);
+static auto _sub_460ADC = reinterpret_cast<_sub_460ADC_t>(0x00460ADC);

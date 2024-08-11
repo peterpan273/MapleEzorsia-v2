@@ -1,4 +1,20 @@
 #pragma once
+#include "logger.h"
+#include <windows.h>
+
+
+#define INITMAPLEHOOK(pOrigFunc, Func_t, pNewFunc, dwAddress, firstval) \
+    while (1) {                                                                \
+        if (ReadValue<BYTE>(dwAddress) != firstval) {                             \
+            Sleep(1);                                                             \
+        } else {                                                                  \
+            break;                                                                \
+        }                                                                         \
+    }                                                                             \
+    pOrigFunc = reinterpret_cast<Func_t>(dwAddress);                              \
+    if (!Memory::SetHook(true, reinterpret_cast<void**>(&pOrigFunc), pNewFunc)) { \
+        Log("Failed to hook maple func at address %d", dwAddress);                \
+    }
 
 class Memory
 {
